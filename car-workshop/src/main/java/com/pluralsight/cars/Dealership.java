@@ -40,6 +40,10 @@ public class Dealership {
         return inventory.stream().filter((c) -> c.getVehicleType().equalsIgnoreCase(vehicleType)).toList();
     }
 
+    public List<Vehicle> getAllVehicles(){
+        return inventory;
+    }
+
     public void addVehicle(Vehicle v) {
         inventory.add(v);
     }
