@@ -7,5 +7,14 @@ public class HotelApp {
 
         Room r = new Room(isClean, isOccupied, numberOfBeds);
 
+
+        // Room should not be available
+        boolean isRoomAvailable = r.isAvailable();
+
+        if(isRoomAvailable){
+            System.out.println("The room is available");
+        }else{
+            System.out.println("The room is not available");
+        }
     }
 }

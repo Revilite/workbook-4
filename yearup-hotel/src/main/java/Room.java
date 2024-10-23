@@ -8,4 +8,8 @@ public class Room {
         this.isClean = isClean;
         this.numberOfBeds = numberOfBeds;
     }
+
+    boolean isAvailable() {
+        return !isOccupied && isClean;
+    }
 }
