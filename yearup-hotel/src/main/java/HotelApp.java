@@ -3,9 +3,9 @@ public class HotelApp {
 
         int numberOfBeds = 2;
         boolean isClean = true;
-        boolean isAvailable = true;
+        boolean isOccupied = true;
 
-        Room r = new Room(isClean, isAvailable, numberOfBeds);
+        Room r = new Room(isClean, isOccupied, numberOfBeds);
 
     }
 }
