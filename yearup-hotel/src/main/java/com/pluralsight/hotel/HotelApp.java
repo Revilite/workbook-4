@@ -21,7 +21,6 @@ public class HotelApp {
 
 
         r.setOccupied(false);
-        r.setClean(true);
         isRoomAvailable = r.isAvailable();
         if (isRoomAvailable) {
             System.out.println("The room is available");

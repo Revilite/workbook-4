@@ -4,6 +4,7 @@ public class Room {
     private boolean isClean;
     private boolean isOccupied;
     private int numberOfBeds;
+    private boolean isDownForMaintenance;
 
     public Room(boolean isClean, boolean isOccupied, int numberOfBeds) {
         this.isOccupied = isOccupied;
@@ -12,7 +13,7 @@ public class Room {
     }
 
     public boolean isAvailable() {
-        return !isOccupied && isClean;
+        return !isOccupied && isClean && !isDownForMaintenance;
     }
 
     public boolean isClean() {
@@ -30,4 +31,13 @@ public class Room {
     public void setOccupied(boolean occupied) {
         isOccupied = occupied;
     }
+
+    public boolean isDownForMaintenance() {
+        return isDownForMaintenance;
+    }
+
+    public void setDownForMaintenance(boolean downForMaintenance) {
+        isDownForMaintenance = downForMaintenance;
+    }
+
 }
