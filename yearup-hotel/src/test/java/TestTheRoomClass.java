@@ -1,6 +1,7 @@
-public class HotelApp {
-    public static void main(String[] args) {
+import com.pluralsight.hotel.Room;
 
+public class TestTheRoomClass {
+    public static void main(String[] args) {
         int numberOfBeds = 2;
         boolean isClean = true;
         boolean isOccupied = true;
@@ -8,22 +9,24 @@ public class HotelApp {
         Room r = new Room(isClean, isOccupied, numberOfBeds);
 
 
-        // Room should not be available
+        // com.pluralsight.hotel.Room should not be available
         boolean isRoomAvailable = r.isAvailable();
 
-        if(isRoomAvailable){
+        if (isRoomAvailable) {
             System.out.println("The room is available");
-        }else{
+        } else {
             System.out.println("The room is not available");
         }
 
-        r.isOccupied = false;
+        r.setOccupied(false);
+        r.setClean(true);
         isRoomAvailable = r.isAvailable();
-        if(isRoomAvailable){
+        if (isRoomAvailable) {
             System.out.println("The room is available");
-        }else{
+        } else {
             System.out.println("The room is not available");
         }
-
     }
+
+
 }
