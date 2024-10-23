@@ -1,5 +1,7 @@
 package com.pluralsight.cars;
 
+import java.util.Objects;
+
 public class Vehicle {
     private int vin;
     private int year;
@@ -83,5 +85,18 @@ public class Vehicle {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return vin == vehicle.vin && year == vehicle.year && odometer == vehicle.odometer && Double.compare(price, vehicle.price) == 0 && Objects.equals(make, vehicle.make) && Objects.equals(model, vehicle.model) && Objects.equals(vehicleType, vehicle.vehicleType) && Objects.equals(color, vehicle.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vin, year, make, model, vehicleType, color, odometer, price);
     }
 }
