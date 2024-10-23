@@ -33,7 +33,7 @@ class TestTheRoom {
         int numberOfBeds = 2;
         boolean isClean = false;
         boolean isOccupied = false;
-        //
+        //Arrange
 
         Room r = new Room(isClean, isOccupied, numberOfBeds);
 
@@ -43,7 +43,17 @@ class TestTheRoom {
         //Assert
         assertFalse(r.isAvailable());
     }
-
     @Test
-    void
+    void when_housekeeping_cleans_room_it_isClean()  {
+        int numberOfBeds = 2;
+        boolean isClean = false;
+        boolean isOccupied = false;
+        //Arrange
+
+        Room r = new Room(isClean, isOccupied, numberOfBeds);
+
+        new Housekeeping().cleanARoom(r);
+
+        assertTrue(r.isClean());
+    }
 }
