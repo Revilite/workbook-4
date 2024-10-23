@@ -16,5 +16,14 @@ public class HotelApp {
         }else{
             System.out.println("The room is not available");
         }
+
+        r.isOccupied = false;
+        isRoomAvailable = r.isAvailable();
+        if(isRoomAvailable){
+            System.out.println("The room is available");
+        }else{
+            System.out.println("The room is not available");
+        }
+
     }
 }
