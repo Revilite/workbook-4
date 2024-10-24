@@ -225,7 +225,7 @@ public class UserInterface {
         DealershipFileManager dfm = new DealershipFileManager();
         int vin = convertToInt(prompt("vin number"));
         try {
-            dealership.removeVehicle((Vehicle) dealership.getAllVehicles().stream().filter((c) -> c.getVin() == (vin)).toArray()[0]);
+            dealership.removeVehicle(dealership.getVehiclesByVin(vin).get(0));
             System.out.println("Car removed!");
         } catch (RuntimeException e) {
             System.out.println("Unable to find vehicle");

@@ -40,6 +40,10 @@ public class Dealership {
         return inventory.stream().filter((c) -> c.getVehicleType().equalsIgnoreCase(vehicleType)).toList();
     }
 
+    public List<Vehicle> getVehiclesByVin(int vin){
+        return inventory.stream().filter((c) -> c.getVin() == vin).toList();
+    }
+
     public List<Vehicle> getAllVehicles(){
         return inventory;
     }
@@ -55,6 +59,6 @@ public class Dealership {
 
     @Override
     public String toString() {
-        return name + " | " + address + " | " + phoneNumber;
+        return name + "|" + address + "|" + phoneNumber;
     }
 }
