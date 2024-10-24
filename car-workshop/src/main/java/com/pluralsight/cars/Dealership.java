@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealership {
-    private String name;
-    private String address;
-    private String phoneNumber;
+    private final String name;
+    private final String address;
+    private final String phoneNumber;
 
     private ArrayList<Vehicle> inventory = new ArrayList<>();
 

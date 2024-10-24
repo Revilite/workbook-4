@@ -2,15 +2,15 @@ package com.pluralsight.cars;
 
 import com.pluralsight.cars.JavaHelpers.ColorCodes;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class UserInterface {
     private Dealership dealership;
 
-    private Dealership init() {
+    private void init() {
         DealershipFileManager dfm = new DealershipFileManager();
         this.dealership = dfm.getDealership();
-        return dfm.getDealership();
     }
 
     public void display() {
@@ -60,9 +60,10 @@ public class UserInterface {
                 case ("8"):
                     processAddVehicleRequest();
                     break;
-                case("9"):
+                case ("9"):
+                    processRemoveVehicleRequest();
                     break;
-                case("99"):
+                case ("99"):
                     break;
                 default:
                     System.out.println("Please choose one of the options");
@@ -177,26 +178,31 @@ public class UserInterface {
     }
 
     public int convertToInt(String input) {
+        Scanner scan = new Scanner(System.in);
         while (true) {
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Not a number");
+                System.out.println("Not a number, Please enter a number");
+                input = scan.nextLine();
             }
         }
     }
 
     public double convertToDouble(String input) {
+        Scanner scan = new Scanner(System.in);
         while (true) {
             try {
                 return Double.parseDouble(input);
             } catch (NumberFormatException e) {
-                System.out.println("Not a number");
+                System.out.println("Not a number, Please enter a number");
+                input = scan.nextLine();
             }
         }
     }
 
     public void processAddVehicleRequest() {
+        DealershipFileManager dfm = new DealershipFileManager();
         int vin = convertToInt(prompt("vin number"));
         String make = prompt("make");
         String model = prompt("model");
@@ -207,5 +213,28 @@ public class UserInterface {
         double price = convertToDouble(prompt("price"));
 
         dealership.addVehicle(new Vehicle(vin, year, make, model, type, color, mileage, price));
+        try {
+            dfm.saveDealership(dealership);
+            System.out.println("Car added!");
+        } catch (IOException e) {
+            System.out.println("Unable to save to file");
+        }
+    }
+
+    public void processRemoveVehicleRequest() {
+        DealershipFileManager dfm = new DealershipFileManager();
+        int vin = convertToInt(prompt("vin number"));
+        try {
+            dealership.removeVehicle((Vehicle) dealership.getAllVehicles().stream().filter((c) -> c.getVin() == (vin)).toArray()[0]);
+            System.out.println("Car removed!");
+        } catch (RuntimeException e) {
+            System.out.println("Unable to find vehicle");
+        }
+
+        try {
+            dfm.saveDealership(dealership);
+        } catch (IOException e) {
+            System.out.println("Unable to save to file");
+        }
     }
 }
