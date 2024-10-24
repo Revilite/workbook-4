@@ -54,10 +54,19 @@ public class UserInterface {
                 case ("6"):
                     processGetByTypeRequest();
                     break;
-                case("7"):
+                case ("7"):
                     processGetAllRequest();
                     break;
-                case("8"):
+                case ("8"):
+                    processAddVehicleRequest();
+                    break;
+                case("9"):
+                    break;
+                case("99"):
+                    break;
+                default:
+                    System.out.println("Please choose one of the options");
+
 
             }
         }
@@ -156,9 +165,47 @@ public class UserInterface {
     }
 
     public void processGetAllRequest() {
-        for(Vehicle vehicle : dealership.getAllVehicles()){
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
             System.out.print(displayVehicles(vehicle));
         }
     }
 
+    public String prompt(String prompt) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What is the " + prompt);
+        return scan.nextLine();
+    }
+
+    public int convertToInt(String input) {
+        while (true) {
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+            }
+        }
+    }
+
+    public double convertToDouble(String input) {
+        while (true) {
+            try {
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+            }
+        }
+    }
+
+    public void processAddVehicleRequest() {
+        int vin = convertToInt(prompt("vin number"));
+        String make = prompt("make");
+        String model = prompt("model");
+        String type = prompt("type");
+        String color = prompt("color");
+        int year = convertToInt(prompt("year"));
+        int mileage = convertToInt(prompt("mileage"));
+        double price = convertToDouble(prompt("price"));
+
+        dealership.addVehicle(new Vehicle(vin, year, make, model, type, color, mileage, price));
+    }
 }
