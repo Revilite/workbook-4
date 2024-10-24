@@ -40,8 +40,25 @@ public class UserInterface {
                     processGetByPriceRequest();
                     break;
                 case ("2"):
-                    processGetByMakeModel();
+                    processGetByMakeModelRequest();
                     break;
+                case ("3"):
+                    processGetByYearRequest();
+                    break;
+                case ("4"):
+                    processGetByColorRequest();
+                    break;
+                case ("5"):
+                    processGetByMileageRequest();
+                    break;
+                case ("6"):
+                    processGetByTypeRequest();
+                    break;
+                case("7"):
+                    processGetAllRequest();
+                    break;
+                case("8"):
+
             }
         }
     }
@@ -58,14 +75,14 @@ public class UserInterface {
                 ColorCodes.RESET));
     }
 
-    public void processGetByPriceRequest() {
+    public int[] getUserRange(String prompt) {
         Scanner scan = new Scanner(System.in);
         boolean userMinNaN = true;
         boolean userMaxNaN = true;
         int minNumber = 0;
         int maxNumber = 0;
         while (userMinNaN) {
-            System.out.println("What is the minimum price you are looking for?");
+            System.out.println("What is the minimum " + prompt + " you are looking for?");
             String min = scan.nextLine();
             try {
                 minNumber = Integer.parseInt(min);
@@ -75,7 +92,7 @@ public class UserInterface {
             }
         }
         while (userMaxNaN) {
-            System.out.println("What is the maximum price you are looking for?");
+            System.out.println("What is the maximum " + prompt + " you are looking for?");
             try {
                 String max = scan.nextLine();
                 maxNumber = Integer.parseInt(max);
@@ -84,17 +101,62 @@ public class UserInterface {
                 System.out.println("That is not a number");
             }
         }
-        for (Vehicle vehicle : dealership.getVehiclesByPrice(minNumber, maxNumber)) {
+        return new int[]{minNumber, maxNumber};
+    }
+
+    public void processGetByPriceRequest() {
+        int[] userRange = getUserRange("price");
+        for (Vehicle vehicle : dealership.getVehiclesByPrice(userRange[0], userRange[1])) {
             System.out.print(displayVehicles(vehicle));
         }
     }
 
-    public void processGetByMakeModel() {
+    public void processGetByMakeModelRequest() {
         Scanner scan = new Scanner(System.in);
         System.out.println("What is the make and the model of the car?");
         String[] makeModel = scan.nextLine().trim().split(" ");
 
-        for(Vehicle vehicle : dealership.getVehiclesByMakeModel(makeModel[0], makeModel[1])){
+        for (Vehicle vehicle : dealership.getVehiclesByMakeModel(makeModel[0], makeModel[1])) {
+            System.out.print(displayVehicles(vehicle));
+        }
+    }
+
+    public void processGetByYearRequest() {
+        int[] userRange = getUserRange("year");
+        for (Vehicle vehicle : dealership.getVehiclesByYear(userRange[0], userRange[1])) {
+            System.out.print(displayVehicles(vehicle));
+        }
+    }
+
+    public void processGetByColorRequest() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What is the color of the car?");
+        String color = scan.nextLine();
+
+        for (Vehicle vehicle : dealership.getVehiclesByColor(color)) {
+            System.out.print(displayVehicles(vehicle));
+        }
+    }
+
+    public void processGetByMileageRequest() {
+        int[] userRange = getUserRange("mileage");
+        for (Vehicle vehicle : dealership.getVehiclesByMileage(userRange[0], userRange[1])) {
+            System.out.print(displayVehicles(vehicle));
+        }
+    }
+
+    public void processGetByTypeRequest() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What is the vehicle type? (car, SUV, Truck, van)");
+        String type = scan.nextLine();
+
+        for (Vehicle vehicle : dealership.getVehiclesByType(type)) {
+            System.out.print(displayVehicles(vehicle));
+        }
+    }
+
+    public void processGetAllRequest() {
+        for(Vehicle vehicle : dealership.getAllVehicles()){
             System.out.print(displayVehicles(vehicle));
         }
     }
