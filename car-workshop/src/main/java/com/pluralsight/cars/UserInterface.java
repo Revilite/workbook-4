@@ -91,7 +91,7 @@ public class UserInterface {
             String year = String.format(ColorCodes.BLUE + "      %-14s ", vehicle.getYear() + ColorCodes.RESET);
             String color = String.format(ColorCodes.RED + " %-18s ", vehicle.getColor() + ColorCodes.RESET);
             String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getOdometer() + ColorCodes.RESET);
-            String price = String.format(ColorCodes.WHITE + " %-14s ",nf.format(vehicle.getPrice()));
+            String price = String.format(ColorCodes.WHITE + " %-14s ", nf.format(vehicle.getPrice()));
 
             if (listOfVehicle.size() == 1) {
                 sb.append("╔═════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════════╗\n");
@@ -133,15 +133,14 @@ public class UserInterface {
             System.out.println("What is the minimum " + prompt + " you are looking for? (Enter 'x' to break)");
             String min = scan.nextLine();
             try {
-                if(min.equalsIgnoreCase("x")){
-                    return new int[] {-1, -1};
+                if (min.equalsIgnoreCase("x")) {
+                    return new int[]{-1, -1};
                 }
                 minNumber = Integer.parseInt(min);
-                if(minNumber < 0){
+                if (minNumber < 0) {
                     System.out.println("Please enter a positive number");
-                }
-                else{
-                userMinNaN = false;
+                } else {
+                    userMinNaN = false;
                 }
             } catch (NumberFormatException e) {
                 System.out.println("That is not a number");
@@ -151,14 +150,13 @@ public class UserInterface {
             System.out.println("What is the maximum " + prompt + " you are looking for? (Enter 'x' to break)");
             try {
                 String max = scan.nextLine();
-                if(max.equalsIgnoreCase("x")){
-                    return new int[] {-1, -1};
+                if (max.equalsIgnoreCase("x")) {
+                    return new int[]{-1, -1};
                 }
                 maxNumber = Integer.parseInt(max);
-                if(maxNumber < 0){
+                if (maxNumber < 0) {
                     System.out.println("Please enter a positive number");
-                }
-                else{
+                } else {
                     userMaxNaN = false;
                 }
 
@@ -179,7 +177,7 @@ public class UserInterface {
         Scanner scan = new Scanner(System.in);
         System.out.println("What is the make and the model of the car? (Enter 'x' to exit)");
         String userInput = scan.nextLine();
-        if(userInput.equalsIgnoreCase("x")){
+        if (userInput.equalsIgnoreCase("x")) {
             return;
         }
         String[] makeModel = userInput.trim().split(" ");
@@ -196,7 +194,7 @@ public class UserInterface {
         Scanner scan = new Scanner(System.in);
         System.out.println("What is the color of the car? (Enter 'x' to exit)");
         String color = scan.nextLine();
-        if(color.equalsIgnoreCase("x")){
+        if (color.equalsIgnoreCase("x")) {
             return;
         }
         System.out.println(displayVehicles(dealership.getVehiclesByColor(color)));
@@ -211,7 +209,7 @@ public class UserInterface {
         Scanner scan = new Scanner(System.in);
         System.out.println("What is the vehicle type? (car, SUV, Truck, Van, Hypercar) (Enter 'x' to exit)");
         String type = scan.nextLine();
-        if(type.equalsIgnoreCase("x")){
+        if (type.equalsIgnoreCase("x")) {
             return;
         }
 
@@ -224,18 +222,28 @@ public class UserInterface {
 
     public String prompt(String prompt) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("What is the " + prompt);
-        return scan.nextLine();
+        System.out.println("What is the " + prompt + " (Enter 'x' to exit)");
+        String input = scan.nextLine();
+        if (input.equalsIgnoreCase("x")) {
+            return null;
+        }
+        return input;
     }
 
     public int convertToInt(String input) {
         Scanner scan = new Scanner(System.in);
+        if (input == null) {
+            return -1;
+        }
         while (true) {
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 System.out.println("Not a number, Please enter a number");
                 input = scan.nextLine();
+                if (input.equalsIgnoreCase("x")) {
+                    return -1;
+                }
             }
         }
     }
@@ -248,6 +256,9 @@ public class UserInterface {
             } catch (NumberFormatException e) {
                 System.out.println("Not a number, Please enter a number");
                 input = scan.nextLine();
+                if (input.equalsIgnoreCase("x")) {
+                    return -1;
+                }
             }
         }
     }
@@ -255,18 +266,42 @@ public class UserInterface {
     public void processAddVehicleRequest() {
         DealershipFileManager dfm = new DealershipFileManager();
         int vin = convertToInt(prompt("vin number"));
+        if (vin == -1) {
+            return;
+        }
         String make = prompt("make");
+        if (make == null) {
+            return;
+        }
         String model = prompt("model");
+        if (model == null) {
+            return;
+        }
         String type = prompt("type");
+        if (type == null) {
+            return;
+        }
         String color = prompt("color");
+        if (color == null) {
+            return;
+        }
         int year = convertToInt(prompt("year"));
+        if (year == -1) {
+            return;
+        }
         int mileage = convertToInt(prompt("mileage"));
+        if (mileage == -1) {
+            return;
+        }
         double price = convertToDouble(prompt("price"));
+        if (price == -1) {
+            return;
+        }
 
         dealership.addVehicle(new Vehicle(vin, year, make, model, type, color, mileage, price));
         try {
             dfm.saveDealership(dealership);
-            System.out.println("Car added!");
+            System.out.println(ColorCodes.GREEN + "Car added!" + ColorCodes.RESET);
         } catch (IOException e) {
             System.out.println("Unable to save to file");
         }
@@ -277,7 +312,7 @@ public class UserInterface {
         int vin = convertToInt(prompt("vin number"));
         try {
             dealership.removeVehicle(dealership.getVehiclesByVin(vin).get(0));
-            System.out.println("Car removed!");
+            System.out.println(ColorCodes.RED + "Car removed" + ColorCodes.RESET);
         } catch (RuntimeException e) {
             System.out.println("Unable to find vehicle");
         }
