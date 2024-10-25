@@ -7,7 +7,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class TestDealershipClass {
-    //TODO: Rename test names
     @org.junit.jupiter.api.Test
     void getVehiclesByPrice_should_return_vehicle_list_with_matching_prices() {
         Dealership dealership = new Dealership("Scott clark Toyota", "392 shield rd", "980-269-4322");

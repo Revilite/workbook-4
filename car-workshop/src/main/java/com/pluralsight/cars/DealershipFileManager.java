@@ -5,10 +5,13 @@ import java.io.*;
 public class DealershipFileManager {
     public Dealership getDealership() {
         try {
+            //Initializes BufferedReader, reads the first line (dealership line) creates a dealership
             BufferedReader buffRead = new BufferedReader(new FileReader("./src/main/resources/WorkshopFiles/inventory.csv"));
             String[] fileLine = buffRead.readLine().split("[|]");
             Dealership dealerShip = new Dealership(fileLine[0], fileLine[1], fileLine[2]);
 
+
+            //Gets all the vehicles in the csv file and saves it to the dealerships inventory list
             String input;
             while ((input = buffRead.readLine()) != null) {
                 String[] segments = input.split("[|]");
@@ -24,6 +27,8 @@ public class DealershipFileManager {
 
     public void saveDealership(Dealership dealership) {
         try {
+
+            //Overwrites the inventory.csv file with the dealership and all the vehicles
             BufferedWriter buffWrite = new BufferedWriter(new FileWriter("./src/main/resources/WorkshopFiles/inventory.csv"));
             buffWrite.write(String.format("%s|%s|%s\n", dealership.getName(), dealership.getAddress(), dealership.getPhoneNumber()));
             for (Vehicle vehicle : dealership.getAllVehicles()) {

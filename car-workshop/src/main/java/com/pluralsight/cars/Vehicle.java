@@ -61,6 +61,7 @@ public class Vehicle {
         return price;
     }
 
+    //Used for the tests
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

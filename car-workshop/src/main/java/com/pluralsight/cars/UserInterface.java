@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class UserInterface {
     private Dealership dealership;
 
+    //takes inventory.csv information and brings it into memory.
     private void init() {
         DealershipFileManager dfm = new DealershipFileManager();
         this.dealership = dfm.getDealership();
@@ -85,6 +86,7 @@ public class UserInterface {
         StringBuilder sb = new StringBuilder();
         NumberFormat nf = NumberFormat.getCurrencyInstance();
         for (Vehicle vehicle : listOfVehicle) {
+            //Gets the color and the variables formatted
             String make = String.format(ColorCodes.YELLOW + "  %-16s ", vehicle.getMake() + ColorCodes.RESET);
             String model = String.format(ColorCodes.GREEN + " %-14s ", vehicle.getModel() + ColorCodes.RESET);
             String year = String.format(ColorCodes.BLUE + "      %-14s ", vehicle.getYear() + ColorCodes.RESET);
@@ -92,27 +94,30 @@ public class UserInterface {
             String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getOdometer() + ColorCodes.RESET);
             String price = String.format(ColorCodes.WHITE + " %-14s ", nf.format(vehicle.getPrice()));
 
+            //Used if there is only 1 item in the list
             if (listOfVehicle.size() == 1) {
                 sb.append("╔═════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════════╗\n");
                 sb.append("║    Make:    ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║   Price:        ║\n");
                 sb.append("╠═════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════════╣\n");
                 sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
                 sb.append("╚════════════════════════════════════════════════════════════════════════════════════════╝\n");
-            } else if (listOfVehicle.get(0) == vehicle) {
-
-
+            }
+            //Used as the heading for the list
+            else if (listOfVehicle.get(0) == vehicle) {
                 sb.append("╔═════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════════╗\n");
                 sb.append("║    Make:    ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║   Price:        ║\n");
                 sb.append("╠═════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════════╣\n");
                 sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
 
-
+            //Used as the footer for the list
             } else if (listOfVehicle.get(listOfVehicle.size() - 1) == vehicle) {
                 sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
                 sb.append("╚════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
                 return sb.toString();
-            } else {
+            }
+            //Used as each individual middle list.
+            else {
                 sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
             }
 
@@ -132,10 +137,12 @@ public class UserInterface {
             System.out.println("What is the minimum " + prompt + " you are looking for? (Enter 'x' to break)");
             String min = scan.nextLine();
             try {
+                //Returns a unsearchable value if the user inputs x
                 if (min.equalsIgnoreCase("x")) {
                     return new int[]{-1, -1};
                 }
                 minNumber = Integer.parseInt(min);
+                //checks if the users number is positive
                 if (minNumber < 0) {
                     System.out.println("Please enter a positive number");
                 } else {
@@ -149,10 +156,12 @@ public class UserInterface {
             System.out.println("What is the maximum " + prompt + " you are looking for? (Enter 'x' to break)");
             try {
                 String max = scan.nextLine();
+                //Returns a unsearchable value if the user inputs x
                 if (max.equalsIgnoreCase("x")) {
                     return new int[]{-1, -1};
                 }
                 maxNumber = Integer.parseInt(max);
+                //checks if the users number is positive
                 if (maxNumber < 0) {
                     System.out.println("Please enter a positive number");
                 } else {
@@ -231,6 +240,8 @@ public class UserInterface {
 
     public int convertToInt(String input) {
         Scanner scan = new Scanner(System.in);
+
+        //Checks if the user enters 'x' returns a unsearchable number
         if (input == null) {
             return -1;
         }
