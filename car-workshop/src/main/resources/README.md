@@ -12,14 +12,16 @@ You are prompted by a list of all the options that you can do with the program. 
 and add remove vehicles. Each option with have prompts with values you would need to add to either search by or
 add/remove cars.
 
-![img.png](readmeImages/options.png)
+![img.png](readmeImages/optionsUpdated.png)
+
 
 ## Actual Cars
 
 When you search for a car it will show up with the make, model, year, color, and mileage. All of them have different
 colors to have a clear distinction of each one.
 
-![img.png](readmeImages/cars.png)
+![img.png](readmeImages/carsUpdated.png)
+
 
 ## Adding/Removing Cars
 
@@ -28,6 +30,5 @@ removing a car, all you would need is the correct vin number to search by so you
 want to remove.
 
 ![img.png](readmeImages/addingCar.png)
-
 # Author
 ## Jacob :)

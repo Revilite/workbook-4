@@ -2,7 +2,6 @@ package com.pluralsight.cars;
 
 import com.pluralsight.cars.JavaHelpers.ColorCodes;
 
-import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Scanner;
@@ -299,28 +298,20 @@ public class UserInterface {
         }
 
         dealership.addVehicle(new Vehicle(vin, year, make, model, type, color, mileage, price));
-        try {
-            dfm.saveDealership(dealership);
-            System.out.println(ColorCodes.GREEN + "Car added!" + ColorCodes.RESET);
-        } catch (IOException e) {
-            System.out.println("Unable to save to file");
-        }
+        dfm.saveDealership(dealership);
+        System.out.println(ColorCodes.GREEN + "Car added!" + ColorCodes.RESET);
+
     }
 
     public void processRemoveVehicleRequest() {
         DealershipFileManager dfm = new DealershipFileManager();
         int vin = convertToInt(prompt("vin number"));
-        try {
-            dealership.removeVehicle(dealership.getVehiclesByVin(vin).get(0));
-            System.out.println(ColorCodes.RED + "Car removed" + ColorCodes.RESET);
-        } catch (RuntimeException e) {
-            System.out.println("Unable to find vehicle");
+        if (vin == -1) {
+            return;
         }
 
-        try {
-            dfm.saveDealership(dealership);
-        } catch (IOException e) {
-            System.out.println("Unable to save to file");
-        }
+        dealership.removeVehicle(dealership.getVehiclesByVin(vin).get(0));
+        dfm.saveDealership(dealership);
+        System.out.println(ColorCodes.RED + "Car removed" + ColorCodes.RESET);
     }
 }

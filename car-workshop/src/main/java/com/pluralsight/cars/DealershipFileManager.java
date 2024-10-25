@@ -22,7 +22,7 @@ public class DealershipFileManager {
         return null;
     }
 
-    public void saveDealership(Dealership dealership) throws IOException {
+    public void saveDealership(Dealership dealership) {
         try {
             BufferedWriter buffWrite = new BufferedWriter(new FileWriter("./src/main/resources/WorkshopFiles/inventory.csv"));
             buffWrite.write(String.format("%s|%s|%s\n", dealership.getName(), dealership.getAddress(), dealership.getPhoneNumber()));
