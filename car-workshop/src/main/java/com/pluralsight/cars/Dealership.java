@@ -16,13 +16,25 @@ public class Dealership {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public List<Vehicle> getVehiclesByPrice(double min, double max) {
         return inventory.stream().filter((c) -> c.getPrice() >= min && c.getPrice() <= max).toList();
     }
 
     public List<Vehicle> getVehiclesByMakeModel(String make, String model){
         return inventory.stream().filter((c) -> c.getMake().equalsIgnoreCase(make) && c.getModel().equalsIgnoreCase(model)).toList();
-    }
+}
 
     public List<Vehicle> getVehiclesByYear(int min, int max){
         return inventory.stream().filter((c) -> c.getYear() >= min && c.getYear() <= max).toList();
@@ -56,9 +68,4 @@ public class Dealership {
         inventory.remove(v);
     }
 
-
-    @Override
-    public String toString() {
-        return name + "|" + address + "|" + phoneNumber;
-    }
 }

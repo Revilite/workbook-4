@@ -17,22 +17,29 @@ public class UserInterface {
         Scanner scan = new Scanner(System.in);
         init();
         String userChoice = "";
-        System.out.println("Welcome to my dealership!!");
+        System.out.println(String.format("""
+                       %s╔════════════════════════════╗
+                       ║ Welcome to my dealership!! ║
+                       ╚════════════════════════════╝%s
+                """, ColorCodes.GREEN, ColorCodes.RESET));
+
         while (!userChoice.equals("99")) {
-            System.out.println("""
-                    Please select what you want to search by!
-                    
-                    Price              (1)
-                    Make/Model         (2)
-                    Year               (3)
-                    Color              (4)
-                    Mileage            (5)
-                    Type               (6)
-                    All                (7)
-                    Add a vehicle      (8)
-                    Remove a vehicle   (9)
-                    Quit               (99)
-                    """);
+            System.out.println(String.format("""
+                    %s╔══════════════════════════════════════════╗
+                    ║ Please select what you want to search by!║
+                    ╠══════════════════════════════════════════╣
+                    ║ Price                              (1)   ║
+                    ║ Make/Model                         (2)   ║
+                    ║ Year                               (3)   ║
+                    ║ Color                              (4)   ║
+                    ║ Mileage                            (5)   ║
+                    ║ Type                               (6)   ║
+                    ║ All                                (7)   ║
+                    ║ Add a vehicle                      (8)   ║
+                    ║ Remove a vehicle                   (9)   ║
+                    ║ Quit                               (99)  ║
+                    ╚══════════════════════════════════════════╝%s
+                    """, ColorCodes.BLUE, ColorCodes.RESET));
             userChoice = scan.nextLine();
 
             switch (userChoice) {
@@ -74,15 +81,34 @@ public class UserInterface {
     }
 
     public String displayVehicles(Vehicle vehicle) {
-        return String.format(String.format("""
-                        %sMake: %s %s Model: %s %s Year: %s %s Color: %s %s Mileage:  %s  %s
-                        """,
-                ColorCodes.YELLOW, vehicle.getMake(),
-                ColorCodes.GREEN, vehicle.getModel(),
-                ColorCodes.BLUE, vehicle.getYear(),
-                ColorCodes.RED, vehicle.getColor(),
-                ColorCodes.PURPLE, vehicle.getOdometer(),
-                ColorCodes.RESET));
+        String make = String.format(ColorCodes.YELLOW + "  %-15s ", vehicle.getMake() + ColorCodes.RESET);
+        String model = String.format(ColorCodes.GREEN + " %-14s ", vehicle.getModel() + ColorCodes.RESET);
+        String year = String.format(ColorCodes.BLUE + "      %-14s ", vehicle.getYear() + ColorCodes.RESET);
+        String color = String.format(ColorCodes.RED + " %-18s ", vehicle.getColor() + ColorCodes.RESET);
+        String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getOdometer() + ColorCodes.RESET);
+        String price = String.format(ColorCodes.WHITE + " %-10.2f ", vehicle.getPrice());
+        if (dealership.getAllVehicles().get(0) == vehicle) {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("╔════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════╗\n");
+            sb.append("║    Make:   ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║   Price:    ║\n");
+            sb.append("╠════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════╣\n");
+            sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+
+            return sb.toString();
+        }
+        else if (dealership.getAllVehicles().get(dealership.getAllVehicles().size() - 1) == vehicle) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+            sb.append("╚═══════════════════════════════════════════════════════════════════════════════════╝\n");
+
+            return sb.toString();
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+
+
+        return sb.toString();
     }
 
     public int[] getUserRange(String prompt) {
