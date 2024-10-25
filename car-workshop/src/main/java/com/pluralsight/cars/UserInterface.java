@@ -3,7 +3,9 @@ package com.pluralsight.cars;
 import com.pluralsight.cars.JavaHelpers.ColorCodes;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Delayed;
 
 public class UserInterface {
     private Dealership dealership;
@@ -80,32 +82,36 @@ public class UserInterface {
         }
     }
 
-    public String displayVehicles(Vehicle vehicle) {
-        String make = String.format(ColorCodes.YELLOW + "  %-15s ", vehicle.getMake() + ColorCodes.RESET);
-        String model = String.format(ColorCodes.GREEN + " %-14s ", vehicle.getModel() + ColorCodes.RESET);
-        String year = String.format(ColorCodes.BLUE + "      %-14s ", vehicle.getYear() + ColorCodes.RESET);
-        String color = String.format(ColorCodes.RED + " %-18s ", vehicle.getColor() + ColorCodes.RESET);
-        String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getOdometer() + ColorCodes.RESET);
-        String price = String.format(ColorCodes.WHITE + " %-10.2f ", vehicle.getPrice());
-        if (dealership.getAllVehicles().get(0) == vehicle) {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("╔════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════╗\n");
-            sb.append("║    Make:   ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║   Price:    ║\n");
-            sb.append("╠════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════╣\n");
-            sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
-
-            return sb.toString();
-        }
-        else if (dealership.getAllVehicles().get(dealership.getAllVehicles().size() - 1) == vehicle) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
-            sb.append("╚═══════════════════════════════════════════════════════════════════════════════════╝\n");
-
-            return sb.toString();
-        }
+    public String displayVehicles(List<Vehicle> listOfVehicle) {
         StringBuilder sb = new StringBuilder();
-        sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+        for (Vehicle vehicle : listOfVehicle) {
+            String make = String.format(ColorCodes.YELLOW + "  %-15s ", vehicle.getMake() + ColorCodes.RESET);
+            String model = String.format(ColorCodes.GREEN + " %-14s ", vehicle.getModel() + ColorCodes.RESET);
+            String year = String.format(ColorCodes.BLUE + "      %-14s ", vehicle.getYear() + ColorCodes.RESET);
+            String color = String.format(ColorCodes.RED + " %-18s ", vehicle.getColor() + ColorCodes.RESET);
+            String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getOdometer() + ColorCodes.RESET);
+            String price = String.format(ColorCodes.WHITE + " %-10.2f ", vehicle.getPrice());
+
+            if (listOfVehicle.get(0) == vehicle) {
+
+
+                sb.append("╔════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════╗\n");
+                sb.append("║    Make:   ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║   Price:    ║\n");
+                sb.append("╠════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════╣\n");
+                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+
+
+            } else if (listOfVehicle.get(listOfVehicle.size() - 1) == vehicle) {
+                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+                sb.append("╚═══════════════════════════════════════════════════════════════════════════════════╝\n");
+
+                return sb.toString();
+            }
+            else{
+            sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+            }
+
+        }
 
 
         return sb.toString();
@@ -142,9 +148,7 @@ public class UserInterface {
 
     public void processGetByPriceRequest() {
         int[] userRange = getUserRange("price");
-        for (Vehicle vehicle : dealership.getVehiclesByPrice(userRange[0], userRange[1])) {
-            System.out.print(displayVehicles(vehicle));
-        }
+        System.out.println(displayVehicles(dealership.getVehiclesByPrice(userRange[0], userRange[1])));
     }
 
     public void processGetByMakeModelRequest() {
@@ -152,33 +156,24 @@ public class UserInterface {
         System.out.println("What is the make and the model of the car?");
         String[] makeModel = scan.nextLine().trim().split(" ");
 
-        for (Vehicle vehicle : dealership.getVehiclesByMakeModel(makeModel[0], makeModel[1])) {
-            System.out.print(displayVehicles(vehicle));
-        }
+        System.out.println(displayVehicles(dealership.getVehiclesByMakeModel(makeModel[0], makeModel[1])));
     }
 
     public void processGetByYearRequest() {
         int[] userRange = getUserRange("year");
-        for (Vehicle vehicle : dealership.getVehiclesByYear(userRange[0], userRange[1])) {
-            System.out.print(displayVehicles(vehicle));
-        }
+        System.out.println(displayVehicles(dealership.getVehiclesByYear(userRange[0], userRange[1])));
     }
 
     public void processGetByColorRequest() {
         Scanner scan = new Scanner(System.in);
         System.out.println("What is the color of the car?");
         String color = scan.nextLine();
-
-        for (Vehicle vehicle : dealership.getVehiclesByColor(color)) {
-            System.out.print(displayVehicles(vehicle));
-        }
+        System.out.println(displayVehicles(dealership.getVehiclesByColor(color)));
     }
 
     public void processGetByMileageRequest() {
         int[] userRange = getUserRange("mileage");
-        for (Vehicle vehicle : dealership.getVehiclesByMileage(userRange[0], userRange[1])) {
-            System.out.print(displayVehicles(vehicle));
-        }
+        System.out.println(displayVehicles(dealership.getVehiclesByMileage(userRange[0], userRange[1])));
     }
 
     public void processGetByTypeRequest() {
@@ -186,15 +181,11 @@ public class UserInterface {
         System.out.println("What is the vehicle type? (car, SUV, Truck, van)");
         String type = scan.nextLine();
 
-        for (Vehicle vehicle : dealership.getVehiclesByType(type)) {
-            System.out.print(displayVehicles(vehicle));
-        }
+        System.out.println(displayVehicles(dealership.getVehiclesByType(type)));
     }
 
     public void processGetAllRequest() {
-        for (Vehicle vehicle : dealership.getAllVehicles()) {
-            System.out.print(displayVehicles(vehicle));
-        }
+        System.out.println(displayVehicles(dealership.getAllVehicles()));
     }
 
     public String prompt(String prompt) {
