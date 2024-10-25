@@ -5,7 +5,6 @@ import com.pluralsight.cars.JavaHelpers.ColorCodes;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.Delayed;
 
 public class UserInterface {
     private Dealership dealership;
@@ -92,7 +91,13 @@ public class UserInterface {
             String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getOdometer() + ColorCodes.RESET);
             String price = String.format(ColorCodes.WHITE + " %-10.2f ", vehicle.getPrice());
 
-            if (listOfVehicle.get(0) == vehicle) {
+            if (listOfVehicle.size() == 1) {
+                sb.append("╔════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════╗\n");
+                sb.append("║    Make:   ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║   Price:    ║\n");
+                sb.append("╠════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════╣\n");
+                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+                sb.append("╚═══════════════════════════════════════════════════════════════════════════════════╝\n");
+            } else if (listOfVehicle.get(0) == vehicle) {
 
 
                 sb.append("╔════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════╗\n");
@@ -106,9 +111,8 @@ public class UserInterface {
                 sb.append("╚═══════════════════════════════════════════════════════════════════════════════════╝\n");
 
                 return sb.toString();
-            }
-            else{
-            sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+            } else {
+                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
             }
 
         }
