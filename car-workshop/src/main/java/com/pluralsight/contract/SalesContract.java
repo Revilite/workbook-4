@@ -54,7 +54,7 @@ public class SalesContract extends Contract {
         super(date, customerName, customerEmail, vehicleSold);
         salesTaxAmount = .05;
         recordingFee = 100;
-        if (vehicleSold.getPrice() < 10000) {
+        if (vehicleSold.getPrice() <= 10000) {
             processingFee = 295;
         } else {
             processingFee = 495;
@@ -73,7 +73,7 @@ public class SalesContract extends Contract {
 
     @Override
     public double getTotalPrice() {
-        return vehicleSold.getPrice() + loanAmount * (vehicleSold.getPrice() * monthlyPayment);
+        return  (1 + salesTaxAmount) * (vehicleSold.getPrice() * (loanAmount * monthlyPayment) + recordingFee + processingFee);
     }
 
     @Override
