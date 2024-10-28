@@ -18,7 +18,16 @@ public class DealershipFileManager {
             String input;
             while ((input = buffRead.readLine()) != null) {
                 String[] segments = input.split("[|]");
-                dealerShip.addVehicle(new VehicleforDummies(Integer.parseInt(segments[0]), Integer.parseInt(segments[1]), segments[2], segments[3], segments[4], segments[5], Integer.parseInt(segments[6]), Double.parseDouble(segments[7])));
+                int vin = Integer.parseInt(segments[0]);
+                int year = Integer.parseInt(segments[1]);
+                String make = segments[2];
+                String model = segments[3];
+                String vehicleType = segments[4];
+                String color = segments[5];
+                int odometer = Integer.parseInt(segments[6]);
+                double price = Double.parseDouble(segments[7]);
+
+                dealerShip.addVehicle(new VehicleforDummies(vin, year, make, model, vehicleType, color, odometer, price));
             }
             buffRead.close();
             return dealerShip;
