@@ -19,14 +19,14 @@ public class UserInterface {
         Scanner scan = new Scanner(System.in);
         init();
         String userChoice = "";
-        System.out.println(String.format("""
+        System.out.printf("""
                        %s╔════════════════════════════╗
                        ║ Welcome to my dealership!! ║
                        ╚════════════════════════════╝%s
-                """, ColorCodes.GREEN, ColorCodes.RESET));
+                %n""", ColorCodes.GREEN, ColorCodes.RESET);
 
         while (!userChoice.equals("99")) {
-            System.out.println(String.format("""
+            System.out.printf("""
                     %s╔══════════════════════════════════════════╗
                     ║ Please select what you want to search by!║
                     ╠══════════════════════════════════════════╣
@@ -41,7 +41,7 @@ public class UserInterface {
                     ║ Remove a vehicle                   (9)   ║
                     ║ Quit                               (99)  ║
                     ╚══════════════════════════════════════════╝%s
-                    """, ColorCodes.BLUE, ColorCodes.RESET));
+                    %n""", ColorCodes.BLUE, ColorCodes.RESET);
             userChoice = scan.nextLine();
 
             switch (userChoice) {
@@ -82,16 +82,16 @@ public class UserInterface {
         }
     }
 
-    public String displayVehicles(List<Vehicle> listOfVehicle) {
+    public String displayVehicles(List<VehicleforDummies> listOfVehicle) {
         StringBuilder sb = new StringBuilder();
         NumberFormat nf = NumberFormat.getCurrencyInstance();
-        for (Vehicle vehicle : listOfVehicle) {
+        for (VehicleforDummies vehicle : listOfVehicle) {
             //Gets the color and the variables formatted
             String make = String.format(ColorCodes.YELLOW + "  %-16s ", vehicle.getMake() + ColorCodes.RESET);
             String model = String.format(ColorCodes.GREEN + " %-14s ", vehicle.getModel() + ColorCodes.RESET);
             String year = String.format(ColorCodes.BLUE + "      %-14s ", vehicle.getYear() + ColorCodes.RESET);
             String color = String.format(ColorCodes.RED + " %-18s ", vehicle.getColor() + ColorCodes.RESET);
-            String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getOdometer() + ColorCodes.RESET);
+            String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getMileage() + ColorCodes.RESET);
             String price = String.format(ColorCodes.WHITE + " %-14s ", nf.format(vehicle.getPrice()));
 
             //Used if there is only 1 item in the list
@@ -308,7 +308,7 @@ public class UserInterface {
             return;
         }
 
-        dealership.addVehicle(new Vehicle(vin, year, make, model, type, color, mileage, price));
+        dealership.addVehicle(new VehicleforDummies(vin, year, make, model, type, color, mileage, price));
         dfm.saveDealership(dealership);
         System.out.println(ColorCodes.GREEN + "Car added!" + ColorCodes.RESET);
 

@@ -2,7 +2,7 @@ package com.pluralsight.cars;
 
 import java.util.Objects;
 
-public class Vehicle {
+public class Vehicle  {
     private final int vin;
     private final int year;
     private final String make;
