@@ -8,15 +8,13 @@ public abstract class Contract {
     protected String customerEmail;
     protected VehicleforDummies vehicleSold;
     protected double totalPrice;
-    protected double monthlyPrice;
+    protected double monthlyPayment;
 
-    public Contract(String date, String customerName, String customerEmail, VehicleforDummies vehicleSold, double totalPrice, double monthlyPrice) {
+    public Contract(String date, String customerName, String customerEmail, VehicleforDummies vehicleSold) {
         this.date = date;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.vehicleSold = vehicleSold;
-        this.totalPrice = totalPrice;
-        this.monthlyPrice = monthlyPrice;
     }
 
     public String getDate() {
@@ -52,5 +50,5 @@ public abstract class Contract {
     }
 
     public abstract double getTotalPrice();
-    public abstract double getMonthlyPrice();
+    public abstract double getMonthlyPayment();
 }
